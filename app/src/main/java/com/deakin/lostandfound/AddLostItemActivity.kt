@@ -14,6 +14,7 @@ import com.deakin.lostandfound.data.DatabaseHelper
 import com.deakin.lostandfound.model.Item
 import com.google.android.material.textfield.TextInputEditText
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
 class AddLostItemActivity : AppCompatActivity() {
@@ -33,36 +34,49 @@ class AddLostItemActivity : AppCompatActivity() {
         val saveButton = findViewById<Button>(R.id.saveButton)
 
         saveButton.setOnClickListener {
-            val selectedRadioButtonId = radioGroup.checkedRadioButtonId
-            val selectedRadioButton = findViewById<RadioButton>(selectedRadioButtonId)
-            val selectedText = selectedRadioButton.text.toString()
+            try {
+                val selectedRadioButtonId = radioGroup.checkedRadioButtonId
+                val selectedRadioButton = findViewById<RadioButton>(selectedRadioButtonId)
+                val selectedText = selectedRadioButton.text.toString()
 
-            val nameEditText = findViewById<EditText>(R.id.nameEditText)
-            val phoneEditText = findViewById<EditText>(R.id.phoneEditText)
-            val descriptionEditText = findViewById<TextInputEditText>(R.id.descriptionEditText)
-            val dateEditText = findViewById<EditText>(R.id.dateEditText)
-            val locationEditText = findViewById<EditText>(R.id.locationEditText)
+                val nameEditText = findViewById<EditText>(R.id.nameEditText)
 
-            // process date
-            val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-            val parsedDate = dateFormat.parse(dateEditText.text.toString())!!
+                if (nameEditText.text.isNullOrBlank()) {
+                    nameEditText.error = "Title cannot be empty!"
+                    nameEditText.requestFocus()
+                    return@setOnClickListener
+                }
 
-            val itemObj = Item(
-                name = nameEditText.text.toString(),
-                lostOrFound = selectedText,
-                phone = phoneEditText.text.toString(),
-                description = descriptionEditText.text.toString(),
-                date = parsedDate,
-                location = locationEditText.text.toString()
-            )
+                val phoneEditText = findViewById<EditText>(R.id.phoneEditText)
+                val descriptionEditText = findViewById<TextInputEditText>(R.id.descriptionEditText)
+                val dateEditText = findViewById<EditText>(R.id.dateEditText)
+                val locationEditText = findViewById<EditText>(R.id.locationEditText)
 
-            val result = db.insertItem(itemObj)
+                // process date
+                val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
-            if (result > -1) {
-                Toast.makeText(this, "Item added successfully!", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show()
+                var parsedDate = dateFormat.parse(dateEditText.text.toString())!!
+
+                val itemObj = Item(
+                    name = nameEditText.text.toString(),
+                    lostOrFound = selectedText,
+                    phone = phoneEditText.text.toString(),
+                    description = descriptionEditText.text.toString(),
+                    date = parsedDate,
+                    location = locationEditText.text.toString()
+                )
+
+                val result = db.insertItem(itemObj)
+
+                if (result > -1) {
+                    Toast.makeText(this, "Item added successfully!", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    Toast.makeText(this, "Something went wrong!", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+                return@setOnClickListener
             }
         }
     }

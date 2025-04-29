@@ -36,9 +36,6 @@ class DatabaseHelper(
         val dropTable = "DROP TABLE IF EXISTS ${Util.TABLE_NAME}"
 
         sqLiteDatabase.execSQL(dropTable)
-
-        Log.d("DatabaseHelper", "onUpgrade: Database upgraded")
-
         onCreate(sqLiteDatabase)
     }
 
@@ -72,7 +69,7 @@ class DatabaseHelper(
         try {
             cursor = db.query(
                 Util.TABLE_NAME,
-                arrayOf(Util.NAME, Util.LOST_OR_FOUND, Util.PHONE, Util.DESCRIPTION, Util.DATE, Util.LOCATION),
+                arrayOf(Util.ITEM_ID, Util.NAME, Util.LOST_OR_FOUND, Util.PHONE, Util.DESCRIPTION, Util.DATE, Util.LOCATION),
                 null,
                 null,
                 null,
@@ -82,6 +79,7 @@ class DatabaseHelper(
 
             if (cursor.moveToFirst()) {
                 do {
+                    val itemId = cursor.getInt(cursor.getColumnIndexOrThrow(Util.ITEM_ID))
                     val name = cursor.getString(cursor.getColumnIndexOrThrow(Util.NAME))
                     val lostOrFound = cursor.getString(cursor.getColumnIndexOrThrow(Util.LOST_OR_FOUND))
                     val phone = cursor.getString(cursor.getColumnIndexOrThrow(Util.PHONE))
@@ -93,6 +91,7 @@ class DatabaseHelper(
                     val date = dateFormat.parse(dateString)!!
 
                     val item = Item(
+                        id = itemId,
                         name = name,
                         lostOrFound = lostOrFound,
                         phone = phone,
@@ -111,4 +110,19 @@ class DatabaseHelper(
         return items
     }
 
+    fun deleteItem(itemId: Int): Boolean {
+        val db: SQLiteDatabase = this.writableDatabase
+        var result = false
+
+        try {
+            val rowsDeleted = db.delete(Util.TABLE_NAME, "${Util.ITEM_ID} = ?", arrayOf(itemId.toString()))
+            result = rowsDeleted > 0
+        } catch (e: Exception) {
+            Log.e("DatabaseHelper", "Error deleting item", e)
+        } finally {
+            db.close()
+        }
+
+        return result
+    }
 }

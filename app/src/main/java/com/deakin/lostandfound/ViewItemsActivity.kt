@@ -1,8 +1,10 @@
 package com.deakin.lostandfound
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.format.DateUtils
+import android.util.Log
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -57,7 +59,29 @@ class ViewItemsActivity : AppCompatActivity() {
                 setPadding(16, 16, 16, 16)
             }
 
+            // pass information to Intent
+            val itemInfoIntent = Intent(this, ItemInfoActivity::class.java)
+
+            Log.d("ViewItemsActivity", "Item ID: ${item.id}")
+
+            itemInfoIntent.putExtra("title", "${item.lostOrFound} ${item.name}")
+            itemInfoIntent.putExtra("date", dateText)
+            itemInfoIntent.putExtra("description", item.description)
+            itemInfoIntent.putExtra("location", item.location)
+            itemInfoIntent.putExtra("phone", item.phone)
+            itemInfoIntent.putExtra("id", item.id.toString())
+
+            itemButton.setOnClickListener {
+                startActivity(itemInfoIntent)
+            }
+
             linearLayout.addView(itemButton)
+
+            val backToHomeButton = findViewById<Button>(R.id.backToHome)
+            backToHomeButton.setOnClickListener {
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }
