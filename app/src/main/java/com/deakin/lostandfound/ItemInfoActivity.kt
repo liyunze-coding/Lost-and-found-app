@@ -36,8 +36,9 @@ class ItemInfoActivity : AppCompatActivity() {
 
         val backToListButton = findViewById<TextView>(R.id.backToList)
         backToListButton.setOnClickListener {
-            val intent = Intent(this, ViewItemsActivity::class.java)
-            startActivity(intent)
+//            val intent = Intent(this, ViewItemsActivity::class.java)
+//            startActivity(intent)
+            finish()
         }
 
         val removeButton = findViewById<TextView>(R.id.removeButton)

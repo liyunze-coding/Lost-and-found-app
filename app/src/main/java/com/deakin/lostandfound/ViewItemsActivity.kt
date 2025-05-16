@@ -79,8 +79,7 @@ class ViewItemsActivity : AppCompatActivity() {
 
             val backToHomeButton = findViewById<Button>(R.id.backToHome)
             backToHomeButton.setOnClickListener {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
+                finish()
             }
         }
     }

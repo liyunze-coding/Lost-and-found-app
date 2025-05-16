@@ -1,7 +1,7 @@
 package com.deakin.lostandfound.util
 
 object Util {
-    const val DATABASE_VERSION = 8
+    const val DATABASE_VERSION = 9
     const val DATABASE_NAME = "lost_and_found_db"
 
     const val TABLE_NAME = "items"
@@ -12,4 +12,6 @@ object Util {
     const val DESCRIPTION = "description"
     const val DATE = "date"
     const val LOCATION = "location"
+    const val LATITUDE = "latitude"
+    const val LONGITUDE = "longitude"
 }

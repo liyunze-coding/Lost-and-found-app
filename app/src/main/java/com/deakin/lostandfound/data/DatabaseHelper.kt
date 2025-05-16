@@ -25,7 +25,9 @@ class DatabaseHelper(
                 ${Util.PHONE} TEXT,
                 ${Util.DESCRIPTION} TEXT,
                 ${Util.DATE} TEXT,
-                ${Util.LOCATION} TEXT
+                ${Util.LOCATION} TEXT,
+                ${Util.LATITUDE} REAL,
+                ${Util.LONGITUDE} REAL
             )
         """.trimIndent()
 
@@ -53,6 +55,9 @@ class DatabaseHelper(
             put(Util.DATE, dateString)
 
             put(Util.LOCATION, item.location)
+
+            put(Util.LATITUDE, item.latitude)
+            put(Util.LONGITUDE, item.longitude)
         }
 
         val newRowId: Long = db.insert(Util.TABLE_NAME, null, contentValues)
@@ -69,7 +74,7 @@ class DatabaseHelper(
         try {
             cursor = db.query(
                 Util.TABLE_NAME,
-                arrayOf(Util.ITEM_ID, Util.NAME, Util.LOST_OR_FOUND, Util.PHONE, Util.DESCRIPTION, Util.DATE, Util.LOCATION),
+                arrayOf(Util.ITEM_ID, Util.NAME, Util.LOST_OR_FOUND, Util.PHONE, Util.DESCRIPTION, Util.DATE, Util.LOCATION, Util.LATITUDE, Util.LONGITUDE),
                 null,
                 null,
                 null,
@@ -86,6 +91,8 @@ class DatabaseHelper(
                     val description = cursor.getString(cursor.getColumnIndexOrThrow(Util.DESCRIPTION))
                     val dateString = cursor.getString(cursor.getColumnIndexOrThrow(Util.DATE))
                     val location = cursor.getString(cursor.getColumnIndexOrThrow(Util.LOCATION))
+                    val latitude = cursor.getDouble(cursor.getColumnIndexOrThrow(Util.LATITUDE))
+                    val longitude = cursor.getDouble(cursor.getColumnIndexOrThrow(Util.LONGITUDE))
 
                     val dateFormat = SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
                     val date = dateFormat.parse(dateString)!!
@@ -97,7 +104,9 @@ class DatabaseHelper(
                         phone = phone,
                         description = description,
                         date = date,
-                        location = location
+                        location = location,
+                        latitude = latitude,
+                        longitude = longitude
                     )
                     items.add(item)
                 } while (cursor.moveToNext())

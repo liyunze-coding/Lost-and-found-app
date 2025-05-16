@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         val createNewAdvertButton = findViewById<Button>(R.id.create_advert)
         val showItemsButton = findViewById<Button>(R.id.show_items)
+        val showOnMapButton = findViewById<Button>(R.id.show_on_map)
 
         createNewAdvertButton.setOnClickListener {
             val addItemIntent = Intent(this, AddLostItemActivity::class.java)
@@ -30,6 +31,11 @@ class MainActivity : AppCompatActivity() {
         showItemsButton.setOnClickListener {
             val viewItemsIntent = Intent(this, ViewItemsActivity::class.java)
             startActivity(viewItemsIntent)
+        }
+
+        showOnMapButton.setOnClickListener {
+            val showOnMapIntent = Intent(this, ShowOnMapActivity::class.java)
+            startActivity(showOnMapIntent)
         }
     }
 }

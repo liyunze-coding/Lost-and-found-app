@@ -7,27 +7,38 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/create_advert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CREATE A NEW ADVERT"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.355" />
 
-    <Button
-        android:id="@+id/show_items"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SHOW ALL LOST &amp; FOUND ITEMS"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="390dp"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/create_advert"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CREATE A NEW ADVERT"
+            android:layout_marginBottom="20dp"/>
+
+        <Button
+            android:id="@+id/show_items"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SHOW ALL LOST &amp; FOUND ITEMS"
+            android:layout_marginBottom="20dp" />
+
+        <Button
+            android:id="@+id/show_on_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SHOW ON MAP"
+            android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
