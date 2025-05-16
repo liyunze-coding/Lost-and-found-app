@@ -19,6 +19,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.android.volley.BuildConfig
 import com.deakin.lostandfound.data.DatabaseHelper
 import com.deakin.lostandfound.model.Item
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -51,7 +52,7 @@ class AddLostItemActivity : AppCompatActivity() {
             insets
         }
 
-        Places.initialize(applicationContext, "INSERT_API_KEY_HERE")
+        Places.initialize(applicationContext, com.deakin.lostandfound.BuildConfig.MAPS_API_KEY)
 
         val db = DatabaseHelper(this, null)
         locationEditText = findViewById<EditText>(R.id.locationEditText)
